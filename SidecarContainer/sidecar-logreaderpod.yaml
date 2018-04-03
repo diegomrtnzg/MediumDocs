@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: logreader-pod
+spec:
+  containers:
+  - name: <logReaderName>
+    image: busybox
+    args: [/bin/sh, -c, 'tail -n+1 -f <logFileDirectory>\<logFileNameWithExtension>']
+    volumeMounts:
+    - name: azurefile-volume
+      mountPath: <logFileDirectory>
+  volumes:
+  - name: azurefile-volume
+    persistentVolumeClaim:
+      claimName: azurefile-pvc

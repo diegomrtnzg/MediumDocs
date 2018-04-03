@@ -1,0 +1,15 @@
+##############################
+# YOUR DEPLOYMENT DEFINITION #
+##############################
+    spec:
+      containers:
+#############################
+# YOUR CONTAINER DEFINITION #
+#############################
+          volumeMounts:
+            - mountPath: <logFileDirectory>
+              name: azurefile-volume
+      volumes:
+      - name: azurefile-volume
+        persistentVolumeClaim:
+          claimName: azurefile-pvc
