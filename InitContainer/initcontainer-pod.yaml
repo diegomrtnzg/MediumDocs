@@ -1,0 +1,35 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: initcontainer-pod
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: initcontainer-pod
+    spec:
+      initContainers:
+      - name: initcontainer-initcontainer
+        image: initcontainer-image
+        volumeMounts:
+        - name: yourvolume-data
+          mountPath: /container_data
+        command: ["/bin/sh"]
+        args: [
+         "-c",
+         "(
+              [[ $([ ! -d /container_data/production ]) -eq 0 ]] &&
+              cp -rf /data/* /container_data/ &&
+              chmod -R 777 /container_data &&
+              chmod -R 700 /container_data/production/ &&
+          ) || echo 1"
+        ]
+      containers:
+#############################
+# YOUR CONTAINER DEFINITION #
+#############################
+      volumes:
+      - name: yourvolume-data
+        persistentVolumeClaim:
+          claimName: yourvolume-pvc
