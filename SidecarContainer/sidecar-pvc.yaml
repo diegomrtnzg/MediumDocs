@@ -8,4 +8,4 @@ spec:
   resources:
     requests:
       storage: 5Gi
-  storageClassName: azurefile # This storage class comes with AKS cluster running on nodes that accept Premium Storage Disk (like DS2_v2)
+  storageClassName: azurefile
