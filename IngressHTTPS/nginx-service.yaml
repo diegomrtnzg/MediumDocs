@@ -1,0 +1,18 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: nginx-service
+  namespace: default
+  labels:
+    app: nginx-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: nginx-ingress-controller
+  ports:
+  - name: http
+    port: 80
+    targetPort: http
+  - name: https
+    port: 443
+    targetPort: https

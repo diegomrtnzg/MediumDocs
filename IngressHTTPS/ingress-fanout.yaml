@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-fanout
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.org/ssl-services: "<servicename>"
+spec:
+  tls:
+    - hosts:
+      - <dnsname>
+      secretName: tls-certificate
+  rules:
+  - host: <dnsname>
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: <servicename>
+          servicePort: 80
